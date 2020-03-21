@@ -17,7 +17,7 @@ public interface ClientRepository extends JpaRepository<Client, Integer> {
     @Query(value = "SELECT * FROM  Clients c WHERE c.name = :name", nativeQuery = true)
     List<Client> retrieveByName(@Param("name") String name);
 
-    @Query(value = "select distinct c.name, c.dateBirth, c.gender from Clients c", nativeQuery = true)
+    @Query(value = "select * from Clients c", nativeQuery = true)
     List<Client> findAllClients();
 
 

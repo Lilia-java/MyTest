@@ -2,25 +2,27 @@ package appl.Entity;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "clients")
 public class Client {
 
-    @Column
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @Column
     private String name;
     @Column
     private String gender;
     @Column
-    private String dateBirth;
+    private Date date_birth;
 
-    public Client(int id, String name, String gender, String dateBirth) {
+    public Client(int id, String name, String gender, Date date_birth) {
         this.id=id;
         this.name = name;
         this.gender = gender;
-        this.dateBirth = dateBirth;
+        this.date_birth = date_birth;
     }
 
 
@@ -52,12 +54,12 @@ public class Client {
         this.gender = gender;
     }
 
-    public String getDateBirth() {
-        return dateBirth;
+    public Date getDateBirth() {
+        return date_birth;
     }
 
-    public void setDateBirth(String dateBirth) {
-        this.dateBirth = dateBirth;
+    public void setDateBirth(Date date_birth) {
+        this.date_birth = date_birth;
     }
 
     @Override
@@ -66,7 +68,7 @@ public class Client {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
-                ", dateBirth='" + dateBirth + '\'' +
+                ", dateBirth='" + date_birth + '\'' +
                 '}';
     }
 }

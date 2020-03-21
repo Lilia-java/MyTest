@@ -1,0 +1,24 @@
+<html>
+
+<body>
+<div>
+    <form method="post">
+        <input type="text" name="text" placeholder=" Привет" />
+
+    </form>
+</div>
+<div>Список клиентов</div>
+<form method="post" action="filter">
+    <input type="text" name="filter">
+    <button type="submit">Найти</button>
+</form>
+{{#clients}}
+<div>
+    <b>{{id}}</b>
+    <span>{{name}}</span>
+    <span>{{gender}}</span>
+    <span>{{dateBirth}}</span>
+</div>
+{{/clients}}
+</body>
+</html>

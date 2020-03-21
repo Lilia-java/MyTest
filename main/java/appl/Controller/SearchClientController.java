@@ -5,43 +5,47 @@ package appl.Controller;
 import appl.Service.ClientService;
 import appl.Entity.Client;
 //import appl.Service.ClientService;
-
-// import hw.model.Searching;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.Map;
 
-
 @Controller
-//@RequestMapping(value = "clients")
-//@ResponseBody
-//@RestController
 public class SearchClientController {
-    @GetMapping("/clientsearch")
-    public String greetingForm(Model model) {
-        //model.addAttribute("greeting", new Greeting());
-        model.addAttribute("clientsearch", new Client());
-        return "clientsearch";
+    @Autowired
+    private ClientService clientService;
+
+
+    @GetMapping
+    public String main(Map<String, Object> model) {
+        Iterable<Client> clients = clientService.findAllClients();
+
+        model.put("clients", clients);
+
+        return "main";
     }
-    @PostMapping("/clientsearch")
-    public String gettingInfo(@ModelAttribute Client client) {
-        if (client.getName()!=null ||client.getDateBirth()!=null || client.getGender()!=null){
-            return "/result";}
-        return "/unsearch";
+
+    @PostMapping
+    public String add(@RequestParam int id,@RequestParam String name, @RequestParam String gender, @RequestParam Date dateBirth, Map<String, Object> model) {
+        Client client = new Client(id,name, gender, dateBirth);
+
+
+        Iterable<Client> clients = clientService.findAllClients();
+
+        model.put("clients", client);
+
+        return "main";
     }
 
-
- /* @Autowired
-  private ClientService clientService;
-
-    @GetMapping("/clientsearch")
-    public String filter(@RequestParam String filter, Model model) {
-
-        model.addAttribute("clientsearch", new Client());
+    @PostMapping("filter")
+    public String filter(@RequestParam String filter, @RequestParam int id,@RequestParam String name, @RequestParam String gender, @RequestParam Date dateBirth, Map<String, Object> model) {
         Iterable<Client> clients;
+        Client client = new Client(id,name, gender, dateBirth);
+        filter=client.getName();
 
         if (filter != null && !filter.isEmpty()) {
             clients = clientService.findByName(filter);
@@ -49,13 +53,8 @@ public class SearchClientController {
             clients = clientService.findAllClients();
         }
 
-        //model.addAllAttributes(clients);
-        //model.put("clients", clients);
+        model.put("clients", clients);
 
-        return "result";
-        //return "clientsearch";
-    }*/
-
+        return "main";
+    }
 }
-
-//clientService.findByName("Harry Potter").forEach(System.out::println);
